@@ -1,28 +1,25 @@
-# Running your own analysis on Sumner
+# Running your own analysis on GCP
 
-**Before running anything, make sure the pipeline is up to date by doing the following:**
+**Make sure you have the gcp-splice branch, it is the only branch tested for running the pipeline directly on GCP:**
 
 Go into the splicing pipeline folder
 ```
 cd /projects/anczukow-lab/splicing_pipeline/splicing-pipelines-nf/
+git branch -a #### to list all brances
+git checkout gcp-splice #### to checkout in branch testing for running the pipeline on GCP
+git branch #### to check which branch you are on
 ```
 
-Update local version of the pipeline. Note: you will need to enter your github username and password.
-```
-git pull
-```
-
-Note: if you have not successfully completed the pipeline test, see [here](../README.md##quick-start-on-sumner-jaxs-hpc)
-
-This pipeline can be run on Sumner in three ways:
-  1. Input a `reads.csv` file to input fastq files and run the pipeline in its entirety.
-  2. Input a `reads.csv` file to input fastq files and run pipeline until STAR mapping step with `--test` parameter set to `true`.
-  3. Input a `bams.csv` file to input bams and run steps of pipeline following STAR mapping (Stringtie and rMATS).
-
-The `cacheDir` stores singularity images. This is set in splicing-pipelines-nf/conf/executors/sumner.config. For non-Anczukow users, this should be changed to a home directory.
+The steps to run the nextflow splicing pipeline are listed below:
 
 ## Running full pipeline with FASTQ input
-### 1. Create a new run directory
+### 1. Create conda environment
+```
+conda env list
+conda env create --name splicing-pipelines-nf --file=containers/splicing-pipelines-nf/environment.yml
+conda activate splicing-pipelines-nf
+```
+Create a new run directory
 
 All analyses should be run in `/projects/anczukow-lab/NGS_analysis`. If your dataset already has a folder here, use that directory. Otherwise, create a new directory with the same name found in the `/projects/anczukow-lab/fastq_files/` folder (Example DATASET Directory - `/projects/anczukow-lab/NGS_analysis/Dataset_4_MYC_MCF10A`). 
 
